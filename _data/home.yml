@@ -9,7 +9,7 @@ navbar_entries:
     url: https://www.abhinav.co
 
 project_entries:
-  - title: HACKMYVM
+  - title: HackMyVM
     url: /hmv
     desc: Врайтапы HMV
 
