@@ -42,7 +42,7 @@ permalink: /htb/
   </div>
 </div>
 
-<!-- Тот же CSS, что и в hmv.md -->
+<!-- чувак ты думал здесь чтото будет? -->
 <style>
   .page-content {
     max-width: 800px;
