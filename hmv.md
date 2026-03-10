@@ -102,40 +102,30 @@ document.addEventListener('DOMContentLoaded', function() {
   
   filterButtons.forEach(button => {
     button.addEventListener('click', function() {
-      // Обновляем активный класс у кнопок
       filterButtons.forEach(btn => btn.classList.remove('active'));
       this.classList.add('active');
       
       const filterValue = this.dataset.filter;
       
-      // Фильтруем посты
       posts.forEach(post => {
         if (filterValue === 'all') {
           post.style.display = 'block';
         } else {
           const postDifficulty = post.dataset.difficulty;
-          if (postDifficulty === filterValue) {
-            post.style.display = 'block';
-          } else {
-            post.style.display = 'none';
-          }
+          post.style.display = postDifficulty === filterValue ? 'block' : 'none';
         }
       });
       
-      // Показываем сообщение, если нет постов
       const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
       const noPostsMessage = document.querySelector('.no-posts');
       
-      if (visiblePosts.length === 0) {
-        if (!noPostsMessage) {
-          const message = document.createElement('div');
-          message.className = 'no-posts';
-          message.innerHTML = '<p>Нет врайтапов с такой сложностью</p>';
-          document.getElementById('posts-grid').appendChild(message);
-        }
-      } else {
-        const existingMessage = document.querySelector('.no-posts:not(.no-posts-permanent)');
-        if (existingMessage) existingMessage.remove();
+      if (visiblePosts.length === 0 && !noPostsMessage) {
+        const message = document.createElement('div');
+        message.className = 'no-posts';
+        message.innerHTML = '<p>Нет врайтапов с такой сложностью</p>';
+        document.getElementById('posts-grid').appendChild(message);
+      } else if (visiblePosts.length > 0 && noPostsMessage) {
+        noPostsMessage.remove();
       }
     });
   });
@@ -143,29 +133,40 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-/* Основные переменные */
+/* Темная тема */
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #2c3e50;
-  --text-secondary: #6c757d;
-  --accent-color: #3498db;
-  --accent-hover: #2980b9;
-  --border-color: #e9ecef;
-  --card-shadow: 0 2px 4px rgba(0,0,0,0.02);
-  --card-shadow-hover: 0 8px 16px rgba(0,0,0,0.05);
+  --bg-primary: #0a0c0f;
+  --bg-secondary: #1a1e24;
+  --bg-tertiary: #252b33;
+  --text-primary: #e5e9f0;
+  --text-secondary: #a0a8b7;
+  --text-muted: #6c757d;
+  --accent-primary: #66c0f0;
+  --accent-secondary: #4a9fd8;
+  --border-color: #2a313c;
+  --card-bg: #151a20;
+  --card-bg-hover: #1c222a;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* Навигация */
 .site-nav {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.95);
+  background: rgba(26, 30, 36, 0.95);
 }
 
 .nav-container {
@@ -201,17 +202,17 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .nav-link:hover {
-  color: var(--accent-color);
+  color: var(--accent-primary);
 }
 
 .nav-link.active {
-  color: var(--accent-color);
-  border-bottom-color: var(--accent-color);
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
 }
 
 /* Хлебные крошки */
 .breadcrumbs {
-  background: var(--bg-secondary);
+  background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-color);
   padding: 0.75rem 0;
 }
@@ -224,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .breadcrumb-link {
-  color: var(--accent-color);
+  color: var(--accent-primary);
   text-decoration: none;
 }
 
@@ -233,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .breadcrumb-separator {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin: 0 0.5rem;
 }
 
@@ -279,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
   margin-bottom: 2.5rem;
   padding: 1.25rem;
   background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -301,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .filter-btn {
   padding: 0.5rem 1.25rem;
   border: 1px solid var(--border-color);
-  background: var(--bg-primary);
+  background: var(--bg-tertiary);
   color: var(--text-secondary);
   border-radius: 20px;
   font-size: 0.9rem;
@@ -311,14 +313,16 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .filter-btn:hover {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--bg-secondary);
 }
 
 .filter-btn.active {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
-  color: white;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
+  font-weight: 600;
 }
 
 /* Сетка постов */
@@ -330,18 +334,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* Карточка поста */
 .post-card {
-  background: var(--bg-primary);
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: var(--card-shadow);
 }
 
 .post-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--card-shadow-hover);
-  border-color: transparent;
+  background: var(--card-bg-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .post-card-content {
@@ -362,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .post-title a:hover {
-  color: var(--accent-color);
+  color: var(--accent-primary);
 }
 
 .post-meta {
@@ -373,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .post-date {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
@@ -387,27 +391,27 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .difficulty-easy {
-  background: rgba(46, 204, 113, 0.1);
-  color: #27ae60;
-  border: 1px solid rgba(46, 204, 113, 0.2);
+  background: rgba(72, 187, 120, 0.15);
+  color: #68d391;
+  border: 1px solid rgba(72, 187, 120, 0.3);
 }
 
 .difficulty-medium {
-  background: rgba(241, 196, 15, 0.1);
-  color: #f39c12;
-  border: 1px solid rgba(241, 196, 15, 0.2);
+  background: rgba(237, 137, 54, 0.15);
+  color: #f6ad55;
+  border: 1px solid rgba(237, 137, 54, 0.3);
 }
 
 .difficulty-hard {
-  background: rgba(231, 76, 60, 0.1);
-  color: #c0392b;
-  border: 1px solid rgba(231, 76, 60, 0.2);
+  background: rgba(245, 101, 101, 0.15);
+  color: #fc8181;
+  border: 1px solid rgba(245, 101, 101, 0.3);
 }
 
 .difficulty-insane {
-  background: rgba(155, 89, 182, 0.1);
-  color: #8e44ad;
-  border: 1px solid rgba(155, 89, 182, 0.2);
+  background: rgba(159, 122, 234, 0.15);
+  color: #b794f4;
+  border: 1px solid rgba(159, 122, 234, 0.3);
 }
 
 .post-excerpt {
@@ -421,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--accent-color);
+  color: var(--accent-primary);
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
@@ -430,6 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .read-more-link:hover {
   gap: 0.75rem;
+  color: var(--accent-secondary);
 }
 
 .arrow-icon {
@@ -446,6 +451,7 @@ document.addEventListener('DOMContentLoaded', function() {
   text-align: center;
   padding: 4rem;
   background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   color: var(--text-secondary);
 }
