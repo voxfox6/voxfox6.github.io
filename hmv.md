@@ -21,7 +21,7 @@ permalink: /hmv/
               {{ post.date | date: "%d.%m.%Y" }}
             </time>
             
-            <!-- БЛОК СО СЛОЖНОСТЬЮ (НОВЫЙ) -->
+            <!-- блок со сложностью -->
             {% if post.difficulty %}
               <span class="post-difficulty difficulty-{{ post.difficulty | downcase }}">
                 Сложность: {{ post.difficulty }}
@@ -92,11 +92,11 @@ permalink: /hmv/
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 15px;  /* Улучшенный отступ между элементами */
+    gap: 10px 15px;  /* отступ между элементами */
     align-items: center;
   }
   
-  /* НОВЫЕ СТИЛИ ДЛЯ СЛОЖНОСТИ */
+  
   .post-difficulty {
     padding: 3px 10px;
     border-radius: 20px;
