@@ -20,6 +20,14 @@ permalink: /hmv/
             <time datetime="{{ post.date | date_to_xmlschema }}">
               {{ post.date | date: "%d.%m.%Y" }}
             </time>
+            
+            <!-- БЛОК СО СЛОЖНОСТЬЮ (НОВЫЙ) -->
+            {% if post.difficulty %}
+              <span class="post-difficulty difficulty-{{ post.difficulty | downcase }}">
+                Сложность: {{ post.difficulty }}
+              </span>
+            {% endif %}
+            
             {% if post.tags.size > 0 %}
               <span class="post-tags">
                 Теги: 
@@ -82,10 +90,48 @@ permalink: /hmv/
     font-size: 0.9em;
     color: #666;
     margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 15px;  /* Улучшенный отступ между элементами */
+    align-items: center;
+  }
+  
+  /* НОВЫЕ СТИЛИ ДЛЯ СЛОЖНОСТИ */
+  .post-difficulty {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+  }
+  
+  .difficulty-easy {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .difficulty-medium {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .difficulty-hard {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .difficulty-insane {
+    background-color: #9c27b0;
+    color: white;
   }
   
   .post-tags {
-    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
   }
   
   .tag {
