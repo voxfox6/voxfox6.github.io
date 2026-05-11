@@ -16,6 +16,7 @@ project_entries:
   - title: Серия DC00
     url: /dc00
     desc: Серия врайтапов уязвимых виртуальных образов AD: От легкого к сложному
+    highlight: "NEW"
 
   - title: Tools
     url: /tools
