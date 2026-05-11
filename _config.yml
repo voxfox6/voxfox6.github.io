@@ -2,7 +2,8 @@ title: VoxFox Blog!
 author: Karimov Emil
 url: https://voxfox6.github.io # root address of the site
 description: > # description of the site (multiple lines allowed)
-  Сайт начинающего исследователя компьютерной безопасности. Здесь вы можете увидеть решения задач с таких платформ как HMV,HTB.THM и так далее...
+  Сайт начинающего исследователя компьютерной безопасности. Здесь вы можете увидеть решения задач с таких платформ как HMV,HTB,THM
+  
 
 permalink: /:slug
 
